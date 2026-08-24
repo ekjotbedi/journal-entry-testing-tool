@@ -1,13 +1,7 @@
 # Audit Test Reference
 
-This document explains each journal-entry test in plain audit language — useful
-both for reviewers and for talking through the project in an interview.
+This document explains each journal-entry test in simple language.
 
-> **Why journal-entry testing?** Under auditing standards (e.g. CAS 240 / ISA
-> 240, "The Auditor's Responsibilities Relating to Fraud"), auditors are
-> required to test journal entries for evidence of management override of
-> controls. The tests below are the classic data-driven procedures used to
-> identify entries warranting further investigation.
 
 | # | Test | What it looks for | Why it matters | Risk weight |
 |---|------|-------------------|----------------|-------------|
@@ -44,5 +38,5 @@ Every test is implemented **twice** and cross-checked at runtime:
 - **SQL** — [`sql/je_tests.sql`](../sql/je_tests.sql), portable ANSI-style SQL
   that can be pointed at a real client database (SQL Server, Oracle, etc.).
 
-The pipeline asserts both implementations return the same number of findings,
+The pipeline asserts that both implementations return the same number of findings,
 demonstrating that the SQL pushed down to the database matches the Python logic.
