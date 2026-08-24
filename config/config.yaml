@@ -1,18 +1,11 @@
-# ---------------------------------------------------------------------------
 # Journal Entry Testing Tool - Configuration
-# ---------------------------------------------------------------------------
-# Central place to tune the synthetic data generation and the audit test
-# thresholds. Auditors frequently adjust these thresholds per engagement, so
-# keeping them in config (instead of hard-coding) mirrors real-world practice.
-# ---------------------------------------------------------------------------
+# Central place to tune synthetic data generation and audit test thresholds.
 
-# --- Synthetic data generation -------------------------------------------
+# Synthetic data generation
 data_generation:
   seed: 42                       # reproducible datasets
   num_entries: 5000             # number of journal entry LINES to generate
   fiscal_year: 2025
-  # Probability (0-1) that the generator deliberately injects a given anomaly.
-  # This gives the test suite something to detect.
   anomaly_rates:
     weekend_posting: 0.04
     after_hours_posting: 0.05
@@ -23,27 +16,26 @@ data_generation:
     backdated_entry: 0.02
     duplicate_entry: 0.015
 
-# --- Audit test parameters -----------------------------------------------
+# Audit test parameters
 tests:
-  # Approval limit. Entries posted just under this value are suspicious
-  # (potential attempt to avoid review).
+  # Approval limit. Entries posted just under this value are suspicious.
   approval_threshold: 10000
-  # How close to the threshold (as a fraction) counts as "just below".
+  # How close to the threshold counts as "just below".
   just_below_tolerance: 0.03
-  # Business hours used for the after-hours test (24h clock, local time).
+  # Business hours used for the after-hours test (24h clock).
   business_hours_start: 7
   business_hours_end: 19
   # Users posting fewer than this many entries are flagged as "rare posters".
   rare_user_max_entries: 15
-  # Tolerance for the debit = credit balance test (handles float rounding).
+  # Tolerance for the debit = credit balance test.
   balance_tolerance: 0.01
   # Round-dollar test: amount is a multiple of this and >= min_amount.
   round_dollar_multiple: 1000
   round_dollar_min_amount: 1000
 
-# --- Risk scoring ---------------------------------------------------------
-# Each test contributes points to an entry's overall risk score. Higher
-# weights = the audit team considers that red flag more severe.
+# Risk scoring
+# Each test contributes points to an entry's overall risk score.
+# Higher weights lead the audit team to consider that red flag more severe.
 risk_weights:
   unbalanced_entry: 50
   duplicate_entry: 30
@@ -54,7 +46,7 @@ risk_weights:
   round_dollar: 8
   rare_user: 12
 
-# --- File paths (relative to project root) -------------------------------
+# File paths (relative to project root)
 paths:
   database: data/processed/journal_entries.db
   raw_data: data/raw/journal_entries.csv
