@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "journal-entry-testing-tool"
+version = "1.0.0"
+description = "A data & analytics audit toolkit for journal-entry testing (SQL + Python + Power BI)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "PyYAML>=6.0",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+je-pipeline = "src.run_pipeline:main"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
